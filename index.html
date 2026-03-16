@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تعلم كتابة الأوامر للذكاء الاصطناعي</title>
+  <meta name="description" content="محتوى معرفي تفاعلي مبسط لتعلم كتابة الأوامر للذكاء الاصطناعي من الصفر." />
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#63708a;
+      --line:#d9e2f0;
+      --primary:#123e7a;
+      --primary-2:#1f5db3;
+      --soft:#edf4ff;
+      --gold:#b98b2f;
+      --success:#0f766e;
+      --danger:#b42318;
+      --shadow:0 14px 40px rgba(16,24,40,.08);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+      background:linear-gradient(180deg,#eef4ff 0,#f8fbff 240px,#f5f7fb 100%);
+      color:var(--text);
+      line-height:1.85;
+    }
+    .container{max-width:1100px;margin:auto;padding:20px}
+    .hero{
+      background:linear-gradient(135deg,var(--primary) 0%, var(--primary-2) 100%);
+      color:#fff;border-radius:28px;padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden
+    }
+    .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+    .hero:before{width:260px;height:260px;left:-60px;bottom:-120px}
+    .hero:after{width:180px;height:180px;right:-40px;top:-50px}
+    h1,h2,h3{margin:0 0 12px}
+    h1{font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.4}
+    h2{font-size:1.45rem;color:var(--primary)}
+    h3{font-size:1.06rem}
+    p{margin:0 0 10px}
+    .hero p{max-width:760px;color:rgba(255,255,255,.95)}
+    .badges,.quick-links,.actions{display:flex;gap:10px;flex-wrap:wrap}
+    .badges{margin-top:16px}
+    .badge,.qlink{
+      border-radius:999px;padding:8px 14px;font-size:.95rem;border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.12);color:#fff;text-decoration:none
+    }
+    .section{margin-top:18px}
+    .grid{display:grid;gap:18px}
+    .grid.two{grid-template-columns:1fr}
+    @media (min-width:860px){.grid.two{grid-template-columns:1fr 1fr}}
+    .card{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      padding:22px;box-shadow:var(--shadow)
+    }
+    .card.soft{background:#fffdf7;border-color:#efdca7}
+    .muted{color:var(--muted)}
+    .list{display:grid;gap:12px;margin-top:10px}
+    .item{
+      display:flex;gap:12px;align-items:flex-start;background:#fbfdff;border:1px solid var(--line);
+      border-radius:16px;padding:14px
+    }
+    .n{
+      min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;
+      background:var(--soft);color:var(--primary)
+    }
+    .box{padding:14px 16px;border-radius:16px;margin-top:12px}
+    .box.example{background:#f8fbff;border:1px solid #cfe0ff}
+    .box.result{background:#f3fffb;border:1px solid #bce9d8}
+    .box.warn{background:#fff6f6;border:1px solid #efc6c6}
+    .box.tip{background:#fff9ee;border:1px solid #efd8a8}
+    .pill{
+      display:inline-block;padding:5px 11px;border-radius:999px;background:var(--soft);color:var(--primary);
+      margin:4px 4px 0 0;font-size:.92rem
+    }
+    details{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:#fff}
+    details+details{margin-top:10px}
+    summary{cursor:pointer;font-weight:800;color:var(--primary)}
+    label{display:block;font-weight:700;margin:10px 0 6px}
+    input,textarea,select{
+      width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit;color:var(--text)
+    }
+    textarea{min-height:88px;resize:vertical}
+    .cols{display:grid;gap:12px}
+    @media (min-width:760px){.cols{grid-template-columns:1fr 1fr}}
+    button,.button-link{
+      border:none;border-radius:12px;padding:12px 18px;font:inherit;font-weight:800;cursor:pointer;text-decoration:none;
+      display:inline-flex;align-items:center;justify-content:center
+    }
+    button.primary,.button-link.primary{background:var(--primary);color:#fff}
+    button.secondary,.button-link.secondary{background:#eef4ff;color:var(--primary);border:1px solid #d7e4ff}
+    .output{
+      margin-top:14px;background:#0f172a;color:#f8fafc;border-radius:16px;padding:16px;white-space:pre-wrap;
+      line-height:1.9;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.96rem
+    }
+    .quiz .q{padding:14px;border-radius:16px;background:#fcfdff;border:1px solid var(--line);margin-bottom:12px}
+    .option{
+      width:100%;text-align:right;background:#fff;color:var(--text);border:1px solid var(--line);margin-top:8px
+    }
+    .option.correct{background:#edfff8;border-color:#95dec5;color:#0d6756}
+    .option.wrong{background:#fff5f5;border-color:#ebb4b4;color:#9f1f1f}
+    .score{display:inline-block;background:var(--soft);color:var(--primary);padding:12px 14px;border-radius:14px;font-weight:800}
+    .footer{padding:22px 8px 10px;text-align:center;color:var(--muted);font-size:.95rem}
+    .mini{font-size:.92rem}
+    .copy-note{margin-top:8px;font-size:.92rem;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>تعلم كتابة الأوامر للذكاء الاصطناعي<br>بأسلوب واضح وتفاعلي للمبتدئ</h1>
+      <p>هذه صفحة معرفية مجانية تساعد أي شخص على فهم معنى الأمر، وطريقة بنائه، والأخطاء الشائعة، ثم تجربة إنشاء أمر جاهز خطوة بخطوة.</p>
+      <div class="badges">
+        <span class="badge">مناسب للمبتدئ</span>
+        <span class="badge">لغة عربية واضحة</span>
+        <span class="badge">أمثلة عملية</span>
+        <span class="badge">مجاني ومباشر</span>
+      </div>
+      <div class="quick-links" style="margin-top:14px">
+        <a class="qlink" href="#basics">ابدأ من الأساس</a>
+        <a class="qlink" href="#builder">جرّب بنفسك</a>
+        <a class="qlink" href="#quiz">اختبر فهمك</a>
+      </div>
+    </section>
+
+    <section class="section card soft">
+      <h2>مهم</h2>
+      <p>بعد نشر هذه الصفحة كرابط عام، أي شخص يفتح الرابط لن يحتاج إلى تسجيل دخول. ستعمل له مباشرة مثل أي موقع عادي.</p>
+    </section>
+
+    <div class="section grid two" id="basics">
+      <section class="card">
+        <h2>1) ما المقصود بالأمر؟</h2>
+        <p>الأمر هو النص الذي تكتبه للذكاء الاصطناعي حتى يفهم <strong>ماذا تريد بالضبط</strong>. كلما كان أوضح، كانت النتيجة أقرب لما تريد.</p>
+        <div class="box warn"><strong>مثال ضعيف:</strong><br>اكتب لي عن القيادة</div>
+        <div class="box result"><strong>مثال أفضل:</strong><br>اكتب لي شرحًا مبسطًا عن القيادة في بيئة العمل، في 5 نقاط قصيرة، مع مثال عملي واحد.</div>
+      </section>
+      <section class="card">
+        <h2>2) لماذا بعض الأوامر تكون أفضل؟</h2>
+        <div class="list">
+          <div class="item"><div class="n">1</div><div><strong>لأنها واضحة</strong><br><span class="muted">تحدد المهمة المطلوبة بدل الكلام العام.</span></div></div>
+          <div class="item"><div class="n">2</div><div><strong>لأنها محددة</strong><br><span class="muted">توضح الشكل المطلوب: نقاط، فقرة، جدول، خطة.</span></div></div>
+          <div class="item"><div class="n">3</div><div><strong>لأنها مناسبة للجمهور</strong><br><span class="muted">المحتوى للمبتدئ يختلف عن المحتوى للقيادات أو المختصين.</span></div></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="section card">
+      <h2>3) التركيبة السهلة لأي أمر جيد</h2>
+      <p>
+        <span class="pill">الدور</span>
+        <span class="pill">المهمة</span>
+        <span class="pill">الموضوع</span>
+        <span class="pill">الجمهور</span>
+        <span class="pill">الأسلوب</span>
+        <span class="pill">الشكل المطلوب</span>
+      </p>
+      <div class="list">
+        <div class="item"><div class="n">أ</div><div><strong>الدور</strong><br><span class="muted">مثل: مدرب، معلم، محلل، كاتب محتوى.</span></div></div>
+        <div class="item"><div class="n">ب</div><div><strong>المهمة</strong><br><span class="muted">مثل: اشرح، لخص، اكتب، حلل، قارن.</span></div></div>
+        <div class="item"><div class="n">ج</div><div><strong>الموضوع</strong><br><span class="muted">مثل: الأمن السيبراني، الإدارة، كتابة الأوامر.</span></div></div>
+        <div class="item"><div class="n">د</div><div><strong>الشكل المطلوب</strong><br><span class="muted">مثل: فقرة، نقاط، جدول، خطة متدرجة.</span></div></div>
+      </div>
+    </section>
+
+    <section class="section card">
+      <h2>4) أمثلة قبل وبعد</h2>
+      <details open>
+        <summary>مثال شرح</summary>
+        <div class="box warn"><strong>قبل:</strong><br>اشرح لي الذكاء الاصطناعي</div>
+        <div class="box result"><strong>بعد:</strong><br>اشرح لي الذكاء الاصطناعي بلغة بسيطة جدًا، كما لو أنك تشرح لشخص مبتدئ، مع 3 أمثلة من الحياة اليومية.</div>
+      </details>
+      <details>
+        <summary>مثال كتابة</summary>
+        <div class="box warn"><strong>قبل:</strong><br>اكتب عن الإدارة</div>
+        <div class="box result"><strong>بعد:</strong><br>اكتب فقرة قصيرة عن أهمية الإدارة في تنظيم العمل، بأسلوب واضح ومباشر، موجهة للموظفين الجدد.</div>
+      </details>
+      <details>
+        <summary>مثال تلخيص</summary>
+        <div class="box warn"><strong>قبل:</strong><br>لخص النص</div>
+        <div class="box result"><strong>بعد:</strong><br>لخص النص في 5 نقاط رئيسية، بلغة واضحة، مع إبراز الفكرة الأساسية دون إطالة.</div>
+      </details>
+    </section>
+
+    <section class="section card">
+      <h2>5) الأخطاء الشائعة</h2>
+      <div class="list">
+        <div class="item"><div class="n">1</div><div><strong>العمومية الزائدة</strong><br><span class="muted">مثل: اكتب لي شيء ممتاز.</span></div></div>
+        <div class="item"><div class="n">2</div><div><strong>عدم تحديد الشكل</strong><br><span class="muted">هل تريد نقاطًا أم فقرة أم جدولًا؟</span></div></div>
+        <div class="item"><div class="n">3</div><div><strong>عدم تحديد الفئة</strong><br><span class="muted">الناتج للمبتدئ يختلف عن الناتج للمختص.</span></div></div>
+        <div class="item"><div class="n">4</div><div><strong>طلب كل شيء دفعة واحدة</strong><br><span class="muted">الأفضل أن تطلب ثم تحسن الناتج على مراحل.</span></div></div>
+      </div>
+    </section>
+
+    <section class="section card" id="builder">
+      <h2>6) جرّب بنفسك: صانع الأمر المبسط</h2>
+      <p class="muted">املأ الحقول التالية، ثم اضغط <strong>إنشاء الأمر</strong> ليظهر لك نص جاهز يمكنك نسخه واستخدامه.</p>
+      <div class="cols">
+        <div>
+          <label for="role">الدور المطلوب</label>
+          <input id="role" placeholder="مثال: مدرب محترف" />
+        </div>
+        <div>
+          <label for="task">المهمة</label>
+          <input id="task" placeholder="مثال: اشرح لي" />
+        </div>
+        <div>
+          <label for="topic">الموضوع</label>
+          <input id="topic" placeholder="مثال: كتابة الأوامر" />
+        </div>
+        <div>
+          <label for="audience">الفئة المستهدفة</label>
+          <input id="audience" placeholder="مثال: المبتدئين" />
+        </div>
+        <div>
+          <label for="style">الأسلوب</label>
+          <select id="style">
+            <option>مبسط وواضح</option>
+            <option>رسمي ومهني</option>
+            <option>تدريبي وتفاعلي</option>
+            <option>مختصر ومباشر</option>
+          </select>
+        </div>
+        <div>
+          <label for="format">شكل الناتج</label>
+          <select id="format">
+            <option>نقاط مرتبة</option>
+            <option>فقرة قصيرة</option>
+            <option>جدول بسيط</option>
+            <option>خطة متدرجة</option>
+          </select>
+        </div>
+      </div>
+      <label for="extras">شروط إضافية</label>
+      <textarea id="extras" placeholder="مثال: مع مثالين عمليين، وبدون مصطلحات معقدة"></textarea>
+      <div class="actions" style="margin-top:14px">
+        <button type="button" class="primary" onclick="buildPrompt()">إنشاء الأمر</button>
+        <button type="button" class="secondary" onclick="copyPrompt()">نسخ الأمر</button>
+      </div>
+      <div id="output" class="output">سيظهر الأمر هنا بعد الضغط على "إنشاء الأمر".</div>
+      <div class="copy-note" id="copyNote">إذا لم يعمل النسخ التلقائي في جهازك، اضغط مطولًا على النص وانسخه يدويًا.</div>
+    </section>
+
+    <section class="section card quiz" id="quiz">
+      <h2>7) اختبار سريع</h2>
+      <div class="q" data-answer="1">
+        <h3>1. أي طلب أفضل؟</h3>
+        <button class="option" onclick="choose(this,0)">اكتب لي شيء عن الإدارة</button>
+        <button class="option" onclick="choose(this,1)">اكتب لي شرحًا مبسطًا عن الإدارة في 5 نقاط مع مثال عملي</button>
+        <button class="option" onclick="choose(this,0)">الإدارة مهمة جدًا</button>
+      </div>
+      <div class="q" data-answer="2">
+        <h3>2. أي عنصر يساعد أكثر على تحسين الناتج؟</h3>
+        <button class="option" onclick="choose(this,0)">ترك الطلب عامًا</button>
+        <button class="option" onclick="choose(this,0)">عدم تحديد الجمهور</button>
+        <button class="option" onclick="choose(this,1)">تحديد المطلوب والشكل والأسلوب</button>
+      </div>
+      <div class="q" data-answer="1">
+        <h3>3. ما الأفضل للمبتدئ في البداية؟</h3>
+        <button class="option" onclick="choose(this,0)">طلب طويل ومتشعب جدًا</button>
+        <button class="option" onclick="choose(this,1)">طلب واضح وبسيط ثم تحسينه لاحقًا</button>
+        <button class="option" onclick="choose(this,0)">الاكتفاء بكلمة واحدة</button>
+      </div>
+      <div class="actions">
+        <button type="button" class="primary" onclick="showScore()">عرض النتيجة</button>
+        <button type="button" class="secondary" onclick="resetQuiz()">إعادة الاختبار</button>
+      </div>
+      <div id="scoreBox" style="margin-top:14px"></div>
+    </section>
+
+    <section class="section card">
+      <h2>8) قالب جاهز للمبتدئ</h2>
+      <div class="output">أريد منك أن تعمل كـ [الدور]، وأن تساعدني في [المهمة] حول [الموضوع]، بحيث يكون الناتج مناسبًا لـ [الفئة المستهدفة]، وبأسلوب [الأسلوب]، وفي شكل [الشكل المطلوب]، مع مراعاة [الشروط الإضافية].</div>
+      <div class="box tip">ابدأ بهذا القالب في كل مرة، ثم عدّل عليه حسب حاجتك. هذه أسهل طريقة لفهم كتابة الأوامر دون تعقيد.</div>
+    </section>
+
+    <section class="section card">
+      <h2>9) اقتراح وصف قصير لبايو إنستغرام</h2>
+      <p class="mini">تعلم كتابة أوامر الذكاء الاصطناعي بأسلوب واضح ومجاني. أمثلة + تدريب تفاعلي للمبتدئين.</p>
+    </section>
+
+    <div class="footer">صفحة معرفية عربية مجانية — جاهزة للنشر كرابط عام في إنستغرام</div>
+  </div>
+
+  <script>
+    function buildPrompt(){
+      const role = document.getElementById('role').value.trim() || '[الدور]';
+      const task = document.getElementById('task').value.trim() || '[المهمة]';
+      const topic = document.getElementById('topic').value.trim() || '[الموضوع]';
+      const audience = document.getElementById('audience').value.trim() || '[الفئة المستهدفة]';
+      const style = document.getElementById('style').value.trim() || '[الأسلوب]';
+      const format = document.getElementById('format').value.trim() || '[الشكل المطلوب]';
+      const extras = document.getElementById('extras').value.trim() || '[الشروط الإضافية]';
+      const text = `أريد منك أن تعمل كـ ${role}، وأن ${task} حول ${topic}، بحيث يكون الناتج مناسبًا لـ ${audience}، وبأسلوب ${style}، وفي شكل ${format}، مع مراعاة ${extras}.`;
+      document.getElementById('output').textContent = text;
+    }
+
+    async function copyPrompt(){
+      const text = document.getElementById('output').textContent;
+      const note = document.getElementById('copyNote');
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          note.textContent = 'تم نسخ الأمر بنجاح.';
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          note.textContent = 'تم نسخ الأمر بنجاح.';
+        }
+      } catch (e) {
+        note.textContent = 'تعذر النسخ التلقائي في هذا الجهاز. انسخ النص يدويًا بالضغط المطول.';
+      }
+    }
+
+    function choose(btn, correct){
+      const q = btn.closest('.q');
+      q.dataset.chosen = correct ? '1' : '0';
+      [...q.querySelectorAll('.option')].forEach(b => b.disabled = true);
+      btn.classList.add(correct ? 'correct' : 'wrong');
+      if(!correct){
+        const options = [...q.querySelectorAll('.option')];
+        const answerIndex = parseInt(q.dataset.answer,10) - 1;
+        if(options[answerIndex]) options[answerIndex].classList.add('correct');
+      }
+    }
+
+    function showScore(){
+      const questions = [...document.querySelectorAll('.q')];
+      const answered = questions.filter(q => q.dataset.chosen !== undefined).length;
+      const score = questions.reduce((n,q)=> n + (q.dataset.chosen === '1' ? 1 : 0), 0);
+      let msg = `نتيجتك: ${score} من ${questions.length}`;
+      if(answered < questions.length) msg += ` — أجبت عن ${answered} سؤال فقط.`;
+      document.getElementById('scoreBox').innerHTML = `<span class="score">${msg}</span>`;
+    }
+
+    function resetQuiz(){
+      document.querySelectorAll('.q').forEach(q => {
+        delete q.dataset.chosen;
+        q.querySelectorAll('.option').forEach(b => {
+          b.disabled = false;
+          b.classList.remove('correct','wrong');
+        });
+      });
+      document.getElementById('scoreBox').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
